@@ -9,7 +9,7 @@ This is the official implementation of **RNb-NeuS: Reflectance and Normal-based 
 [Jean-Denis Durou](https://www.irit.fr/~Jean-Denis.Durou/),
 [Lilian Calvet](https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUKcmljayBhc2xleQ%3D%3D)
 
-### [Project page]() | [Paper](https://arxiv.org/abs/2312.01215)
+### [Project page](https://robinbruneau.github.io/publications/rnb_neus.html) | [Paper](https://arxiv.org/abs/2312.01215)
 
 <img src="assets/pipeline.png">
 
