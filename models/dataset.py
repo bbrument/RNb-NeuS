@@ -77,8 +77,9 @@ class Dataset:
         self.data_dir = conf.get_string('data_dir')
         self.normal_dir = conf.get_string('normal_dir', default='normal')
         self.albedo_dir = conf.get_string('albedo_dir')
+        self.no_albedo = no_albedo
         if self.albedo_dir == '':
-            no_albedo = True
+            self.no_albedo = True
         self.mask_dir = conf.get_string('mask_dir', default='mask')
 
         self.render_cameras_name = conf.get_string('render_cameras_name')
@@ -99,7 +100,7 @@ class Dataset:
         normals_np = np.stack([load_normal(im_name) for im_name in normals_lis]) # [n_images, H, W, 3]
         self.normals_lis = normals_lis
 
-        if not no_albedo:
+        if not self.no_albedo:
             albedos_lis = sorted(glob(os.path.join(self.data_dir, self.albedo_dir, '*.png')))
             albedos_np = np.stack([load_image(im_name) for im_name in albedos_lis])
             self.albedos_lis = albedos_lis
@@ -107,7 +108,7 @@ class Dataset:
         light_directions_cam_warmup_np = self.gen_light_directions().transpose() # [3(n_lights),3]
         self.n_lights = light_directions_cam_warmup_np.shape[0]
         shaded_images_warmup_np = np.maximum(np.sum(normals_np[:, np.newaxis, :, :, :] * light_directions_cam_warmup_np[np.newaxis, :, np.newaxis, np.newaxis, :], axis=-1), 0)[:,:,:,:,np.newaxis]
-        if not no_albedo:
+        if not self.no_albedo:
             images_warmup_np = albedos_np[:,np.newaxis,:,:,:] * shaded_images_warmup_np
         else:
             images_warmup_np = np.tile(shaded_images_warmup_np, (1, 1, 1, 1, 3))
@@ -115,7 +116,7 @@ class Dataset:
         light_directions_cam_np = self.gen_light_directions(normals_np) # [n_images, 3(n_lights), H, W, 3]
         # light_directions_cam_np = np.zeros((self.n_images, self.n_lights, self.H, self.W, 3))
         shaded_images_np = np.maximum(np.sum(normals_np[:, np.newaxis, :, :, :] * light_directions_cam_np, axis=-1), 0)[:,:,:,:,np.newaxis]
-        if not no_albedo:
+        if not self.no_albedo:
             images_np = albedos_np[:,np.newaxis,:,:,:] * shaded_images_np
         else:   
             images_np = np.tile(shaded_images_np, (1, 1, 1, 1, 3))
@@ -149,7 +150,7 @@ class Dataset:
         self.images = torch.from_numpy(images_np.astype(np.float32)).cpu()  # [n_images, 3, H, W, 3]
         self.masks = torch.from_numpy(masks_np.astype(np.float32)).unsqueeze(3).cpu()
         del normals_np
-        if not no_albedo:
+        if not self.no_albedo:
             del albedos_np
         del light_directions_cam_warmup_np
         del light_directions_warmup_np
