@@ -125,7 +125,7 @@ class Runner:
                 mask = torch.ones_like(mask)
             mask_sum = mask.sum() + 1e-5
 
-            if self.iter_step < self.warm_up_iter:
+            if self.iter_step < self.warm_up_iter and False:
                 true_rgb = true_rgb_warmup
 
                 lights_dir = self.dataset.light_directions_warmup[cbn, :, :].cuda()
@@ -293,7 +293,7 @@ class Runner:
                                 no_albedo=self.no_albedo)
                 
             else:
-                lights_dir = self.dataset.light_directions[idv, idv, pixels_y, pixels_x, :].cuda()
+                lights_dir = self.dataset.light_directions[idv, idl, pixels_y, pixels_x, :].cuda()
                 lights_dir = lights_dir.reshape(1,self.batch_size,1,3)
 
                 render_out = self.renderer.render_rnb(rays_o_batch, rays_d_batch, near, far, lights_dir,
