@@ -76,7 +76,7 @@ class Dataset:
 
         self.data_dir = conf.get_string('data_dir')
         self.normal_dir = conf.get_string('normal_dir', default='normal')
-        self.albedo_dir = conf.get_string('albedo_dir')
+        self.albedo_dir = conf.get_string('albedo_dir', default='')
         self.no_albedo = no_albedo
         if self.albedo_dir == '':
             self.no_albedo = True
