@@ -225,7 +225,12 @@ class Dataset:
         rays_v = p / torch.linalg.norm(p, ord=2, dim=-1, keepdim=True)  # W, H, 3
         rays_v = torch.matmul(self.pose_all[img_idx, None, None, :3, :3], rays_v[:, :, :, None]).squeeze()  # W, H, 3
         rays_o = self.pose_all[img_idx, None, None, :3, 3].expand(rays_v.shape)  # W, H, 3
-        return rays_o.transpose(0, 1), rays_v.transpose(0, 1), pixels_x.transpose(0, 1), pixels_y.transpose(0, 1)
+        return (
+            rays_o.transpose(0, 1),
+            rays_v.transpose(0, 1),
+            pixels_x.transpose(0, 1),
+            pixels_y.transpose(0, 1)
+        )
 
     def ps_gen_random_rays_at(self, img_idx, batch_size):
         """

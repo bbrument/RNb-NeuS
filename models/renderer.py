@@ -1015,7 +1015,6 @@ class NeuSRenderer:
 
         shading_fine = (normal[None,:,:,:] * directions).sum(dim=-1, keepdim=True)
         color_fine = (albedo[None, :, :, :] * weights[None, :, :, None] * shading_fine).sum(dim=2)
-        albedo_fine = (albedo[None,:,:,:] * weights[None,:, :, None]).sum(dim=2)
 
         weights_sum = weights.sum(dim=-1, keepdim=True)
         gradients = ret_fine['gradients']

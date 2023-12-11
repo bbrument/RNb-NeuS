@@ -125,7 +125,7 @@ class Runner:
                 mask = torch.ones_like(mask)
             mask_sum = mask.sum() + 1e-5
 
-            if self.iter_step < self.warm_up_iter and False:
+            if self.iter_step < self.warm_up_iter:
                 true_rgb = true_rgb_warmup
 
                 lights_dir = self.dataset.light_directions_warmup[cbn, :, :].cuda()
@@ -271,6 +271,10 @@ class Runner:
             resolution_level = self.validate_resolution_level
         rays_o, rays_d, pixels_x, pixels_y = self.dataset.gen_rays_at(idv, resolution_level=resolution_level)
         H, W, _ = rays_o.shape
+        
+        pixels_x = pixels_x.round().long()
+        pixels_y = pixels_y.round().long()
+
         rays_o = rays_o.reshape(-1, 3).split(self.batch_size)
         rays_d = rays_d.reshape(-1, 3).split(self.batch_size)
         pixels_x = pixels_x.reshape(-1, 1).split(self.batch_size)
@@ -279,7 +283,7 @@ class Runner:
         out_rgb_fine = []
         out_normal_fine = []
 
-        for rays_o_batch, rays_d_batch in zip(rays_o, rays_d):
+        for rays_o_batch, rays_d_batch, pixels_x_batch, pixels_y_batch in zip(rays_o, rays_d, pixels_x, pixels_y):
             near, far = self.dataset.near_far_from_sphere(rays_o_batch, rays_d_batch)
             background_rgb = torch.ones([1, 3]) if self.use_white_bkgd else None
 
@@ -293,9 +297,7 @@ class Runner:
                                 no_albedo=self.no_albedo)
                 
             else:
-                lights_dir = self.dataset.light_directions[idv, idl, pixels_y, pixels_x, :].cuda()
-                lights_dir = lights_dir.reshape(1,self.batch_size,1,3)
-
+                lights_dir = self.dataset.light_directions[idv, idl, pixels_y_batch, pixels_x_batch, :].cuda().unsqueeze(0)
                 render_out = self.renderer.render_rnb(rays_o_batch, rays_d_batch, near, far, lights_dir,
                                 background_rgb=background_rgb,
                                 cos_anneal_ratio=self.get_cos_anneal_ratio(),
