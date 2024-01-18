@@ -463,7 +463,7 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG, format=FORMAT)
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--conf', type=str, default='./confs/base.conf')
+    parser.add_argument('--conf', type=str, default='./confs/wmask_rnb.conf')
     parser.add_argument('--mode', type=str, default='train')
     parser.add_argument('--mcube_threshold', type=float, default=0.0)
     parser.add_argument('--is_continue', default=False, action="store_true")
@@ -478,39 +478,14 @@ if __name__ == '__main__':
     if args.mode == 'train_rnb' :
         runner = Runner(args.conf, args.mode, args.case, args.is_continue, args.no_albedo)
         runner.train_rnb()
+        runner.validate_mesh(world_space=True, resolution=512, threshold=args.mcube_threshold)
 
     elif args.mode == 'validate_mesh':
-        runner = Runner(args.conf, args.mode, args.case, args.is_continue)
+        runner = Runner(args.conf, args.mode, args.case, args.is_continue, args.no_albedo)
         runner.validate_mesh(world_space=True, resolution=512, threshold=args.mcube_threshold)
     elif args.mode == 'validate_mesh_texture':
-        runner = Runner(args.conf, args.mode, args.case, args.is_continue)
+        runner = Runner(args.conf, args.mode, args.case, args.is_continue, args.no_albedo)
         runner.validate_mesh_texture(world_space=True, resolution=512, threshold=args.mcube_threshold)
     elif args.mode == "validate_image_ps" :
-        runner = Runner(args.conf, args.mode, args.case, args.is_continue)
+        runner = Runner(args.conf, args.mode, args.case, args.is_continue, args.no_albedo)
         runner.validate_image_ps()
-    elif args.mode == "validate_image_normal_integration" :
-        runner = Runner(args.conf, args.mode, args.case, args.is_continue)
-        runner.validate_image_normal_integration()
-
-    # CVPR 2024
-
-    elif args.mode == 'train_RnB_lights_optimal' :
-        runner = Runner(args.conf, args.mode, args.case, args.is_continue)
-        runner.train_RnB_lights_optimal()
-        runner.validate_mesh(world_space=True, resolution=512, threshold=args.mcube_threshold)
-    elif args.mode == 'train_RnB_lights_optimal_worelu' :
-        runner = Runner(args.conf, args.mode, args.case, args.is_continue)
-        runner.train_RnB_lights_optimal_worelu()
-        runner.validate_mesh(world_space=True, resolution=512, threshold=args.mcube_threshold)
-    elif args.mode == 'train_mvps_normal_integration':
-        runner = Runner(args.conf, args.mode, args.case, args.is_continue)
-        runner.train_mvps_normal_integration()
-        runner.validate_mesh(world_space=True, resolution=512, threshold=args.mcube_threshold)
-    elif args.mode == 'train_mvps_normal_integration_light_optimal':
-        runner = Runner(args.conf, args.mode, args.case, args.is_continue)
-        runner.train_mvps_normal_integration_light_optimal()
-        runner.validate_mesh(world_space=True, resolution=512, threshold=args.mcube_threshold)
-    elif args.mode == 'train_mvps_normal_integration_light_optimal_worelu':
-        runner = Runner(args.conf, args.mode, args.case, args.is_continue)
-        runner.train_mvps_normal_integration_light_optimal_worelu()
-        runner.validate_mesh(world_space=True, resolution=512, threshold=args.mcube_threshold)
