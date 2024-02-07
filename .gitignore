@@ -153,10 +153,8 @@ fabric.properties
 data
 public_data
 exp
-tmp
-exp_old
+eval
 
 script.sh
 get_exp.sh
-eval
 tmp.sh
