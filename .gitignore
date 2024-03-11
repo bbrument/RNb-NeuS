@@ -158,3 +158,4 @@ eval
 script.sh
 get_exp.sh
 tmp.sh
+cut_cameras_npz.py
