@@ -116,6 +116,7 @@ class Dataset:
         light_directions_cam_np = self.gen_light_directions(normals_np) # [n_images, 3(n_lights), H, W, 3]
         # light_directions_cam_np = np.zeros((self.n_images, self.n_lights, self.H, self.W, 3))
         shaded_images_np = np.maximum(np.sum(normals_np[:, np.newaxis, :, :, :] * light_directions_cam_np, axis=-1), 0)[:,:,:,:,np.newaxis]
+
         if not self.no_albedo:
             images_np = albedos_np[:,np.newaxis,:,:,:] * shaded_images_np
         else:   
@@ -174,43 +175,41 @@ class Dataset:
         self.object_bbox_max = object_bbox_max[:3, 0]
 
         print('Load data: End')
-
+    
     def gen_light_directions(self, normal=None):
-        """
-        Generate light directions.
-        """
         tilt = np.radians([0, 120, 240])
-        slant = np.radians([30, 30, 30])
-        if normal is not None:
-            slant = np.radians([54.74, 54.74, 54.74])
+        slant = np.radians([30, 30, 30]) if normal is None else np.radians([54.74, 54.74, 54.74])
+        n_lights = tilt.shape[0]
 
         u = -np.array([
             np.sin(slant) * np.cos(tilt),
             np.sin(slant) * np.sin(tilt),
             np.cos(slant)
-        ])
+        ]) # [3, 3(n_lights)]
 
         if normal is not None:
-            n_images, n_rows, n_cols, _ = normal.shape
-            light_directions_all = np.zeros((n_images, 3, n_rows, n_cols, 3))
-            for k in range(n_images):
-                for i in range(n_rows):
-                    for j in range(n_cols):
-                        outer_prod = np.outer(normal[k,i,j,:], normal[k,i,j,:])
-                        U, _, _ = np.linalg.svd(outer_prod)
-                        if np.linalg.det(U) < 0:
-                            R = np.array([-U[:,1], U[:,2], U[:,0]]).T
-                        else:
-                            R = np.array([U[:,1], U[:,2], U[:,0]]).T
-                        if R[2,2] < 0:
-                            R = np.array([-R[:,0], R[:,1], -R[:,2]]).T
-                        light_directions_all[k, :, i, j, :] = (R @ u).T
-            light_directions = light_directions_all
+            n_images, n_rows, n_cols, _ = normal.shape # [n_images, H, W, 3]
+            # normal_flat = normal.reshape(-1, 3) # [n_images*H*W, 3]
+            # outer_prod = np.einsum('ij,ik->ijk', normal_flat, normal_flat) # [n_images*H*W, 3, 3]
+            outer_prod = np.einsum('...j,...k->...jk', normal, normal) # [n_images, H, W, 3, 3]
+            U, _, _ = np.linalg.svd(outer_prod)
+
+            det_U = np.linalg.det(U)
+            det_U_sign = np.where(det_U < 0, -1, 1)[..., np.newaxis, np.newaxis]
+
+            R = np.where(det_U_sign < 0, 
+                        np.einsum('...ij,jk->...ik', U, np.array([[0, 0, 1], [-1, 0, 0], [0, 1, 0]])), 
+                        np.einsum('...ij,jk->...ik', U, np.array([[0, 0, 1], [1, 0, 0], [0, 1, 0]])))
+            
+            R_22 = (R[..., 2, 2] < 0)[..., np.newaxis, np.newaxis]
+            R = np.where(R_22, np.einsum('...ij,jk->...ik', R, np.array([[-1, 0, 0], [0, 1, 0], [0, 0, -1]])), R)
+
+            light_directions_all = np.einsum('...lm,mn->...ln', R, u) # [n_images, H, W, 3, 3(n_lights)]
+            light_directions = light_directions_all.transpose(0, 4, 1, 2, 3)
         else:
             light_directions = u
 
         return light_directions
-    
 
     def gen_rays_at(self, img_idx, resolution_level=1):
         """

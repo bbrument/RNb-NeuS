@@ -1,9 +1,10 @@
 trimesh==3.9.8
-numpy==1.19.2
+numpy==1.26.4
 pyhocon==0.3.57
 icecream==2.1.0
-opencv_python==4.5.2.52
+opencv_python==4.9.0.80
 tqdm==4.50.2
-torch==1.8.0
-scipy==1.7.0
-PyMCubes==0.1.2
+torch==1.13.1
+scipy==1.12.0
+PyMCubes==0.1.4
+tensorboard==2.16.2
