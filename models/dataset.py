@@ -92,7 +92,7 @@ class Dataset:
         self.camera_dict = camera_dict
 
         masks_lis = sorted(glob(os.path.join(self.data_dir, self.mask_dir, '*.png')))
-        masks_np = np.stack([cv.imread(im_name, -1)[:,:,0] for im_name in masks_lis]) / 255.0
+        masks_np = np.stack([cv.imread(im_name, -1) for im_name in masks_lis]) / 255.0
         masks_np = np.where(masks_np > 0.5, 1.0, 0.0)
         self.n_images, self.H, self.W = masks_np.shape
 
@@ -251,13 +251,13 @@ class Dataset:
         """
         Generate random rays at world space from one camera.
         """
-        pixels_x = torch.randint(low=int(0.00*self.W), high=int(1.00*self.W), size=[batch_size])
-        pixels_y = torch.randint(low=int(0.00*self.H), high=int(1.00*self.H), size=[batch_size])
+        pixels_x = torch.randint(low=int(0.00*self.W), high=int(1.00*self.W), size=[batch_size], device='cpu')
+        pixels_y = torch.randint(low=int(0.00*self.H), high=int(1.00*self.H), size=[batch_size], device='cpu')
         images_warmup = self.images_warmup[img_idx,:,pixels_y,pixels_x,:] # nb_light, batch_size, 3-4
         images = self.images[img_idx,:,pixels_y,pixels_x,:] # nb_light, batch_size, 3-4
 
         mask = self.masks[img_idx][(pixels_y, pixels_x)] # batch_size, 3
-        p = torch.stack([pixels_x, pixels_y, torch.ones_like(pixels_y)], dim=-1).float()  # batch_size, 3
+        p = torch.stack([pixels_x, pixels_y, torch.ones_like(pixels_y)], dim=-1).float().cuda()  # batch_size, 3
         p = torch.matmul(self.intrinsics_all_inv[img_idx, None, :3, :3], p[:, :, None]).squeeze() # batch_size, 3
         rays_v = p / torch.linalg.norm(p, ord=2, dim=-1, keepdim=True)    # batch_size, 3
         rays_v = torch.matmul(self.pose_all[img_idx, None, :3, :3], rays_v[:, :, None]).squeeze()  # batch_size, 3
