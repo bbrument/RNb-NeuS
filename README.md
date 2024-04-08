@@ -29,7 +29,7 @@ pip install -r requirements.txt
 Our data format is inspired from [IDR](https://github.com/lioryariv/idr/blob/main/DATA_CONVENTION.md) as follows:
 ```
 CASE_NAME
-|-- cameras_xxx.npz    # camera parameters
+|-- cameras.npz    # camera parameters
 |-- normal
     |-- 000.png        # normal map for each view
     |-- 001.png
