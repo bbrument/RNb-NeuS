@@ -77,8 +77,7 @@ If you find our code useful for your research, please cite
 @inproceedings{Brument23,
     title={RNb-Neus: Reflectance and normal Based reconstruction with NeuS},
     author={Baptiste Brument and Robin Bruneau and Yvain Quéau and Jean Mélou and François Lauze and Jean-Denis Durou and Lilian Calvet},
-    eprint={2312.01215},
-    archivePrefix={arXiv},
-    year={2023}
+    booktitle={IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    year={2024}
 }
 ```
