@@ -74,7 +74,7 @@ Additionaly, we provide the five meshes of the DiLiGenT-MV dataset with our meth
 ## Citation
 If you find our code useful for your research, please cite
 ```
-@inproceedings{Brument23,
+@inproceedings{Brument24,
     title={RNb-NeuS: Reflectance and Normal-based Multi-View 3D Reconstruction},
     author={Baptiste Brument and Robin Bruneau and Yvain Quéau and Jean Mélou and François Lauze and Jean-Denis Durou and Lilian Calvet},
     booktitle={IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
