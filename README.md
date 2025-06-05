@@ -4,9 +4,9 @@
   <hr>
   <h1>✨ RNb-NeuS2 is now available! ✨</h1>
   <p>A new and improved version of this project has been released, featuring a <strong>100x faster CUDA implementation</strong>.</p>
-  <a href="https://robinbruneau.github.io/publications/rnb_neus2.html"><img src="https://img.shields.io/badge/Project_Page-🌐-blue?style=for-the-badge" alt="Project Page"></a>
-  <a href="https://arxiv.org/abs/2506.04115"><img src="https://img.shields.io/badge/arXiv-2506.04115-b31b1b?style=for-the-badge" alt="arXiv"></a>
-  <a href="https://github.com/RobinBruneau/RNb-NeuS2"><img src="https://img.shields.io/badge/Code-💻-black?style=for-the-badge" alt="Code"></a>
+  <a href="https://robinbruneau.github.io/publications/rnb_neus2.html"><img src="https://img.shields.io/badge/Project_Page-🌐-blue" alt="Project Page"></a>
+  <a href="https://arxiv.org/abs/2506.04115"><img src="https://img.shields.io/badge/arXiv-2506.04115-b31b1b" alt="arXiv"></a>
+  <a href="https://github.com/RobinBruneau/RNb-NeuS2"><img src="https://img.shields.io/badge/Code-💻-black" alt="Code"></a>
   <hr>
 </div>
 
