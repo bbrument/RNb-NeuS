@@ -6,7 +6,7 @@
   <p>A new and improved version of this project has been released, featuring a <strong>100x faster CUDA implementation</strong>.</p>
   <a href="https://robinbruneau.github.io/publications/rnb_neus2.html"><img src="https://img.shields.io/badge/Project_Page-🌐-blue" alt="Project Page" height="30"></a>
   <a href="https://arxiv.org/abs/2506.04115"><img src="https://img.shields.io/badge/arXiv-2506.04115-b31b1b" alt="arXiv" height="30"></a>
-  <a href="https://github.com/RobinBruneau/RNb-NeuS2"><img src="https://img.shields.io/badge/Code-💻-black" alt="Code" height="30"></a>
+  <a href="https://github.com/RobinBruneau/RNb-NeuS2"><img src="https://img.shields.io/badge/Code-CUDA-green" alt="Code" height="30"></a>
   <hr>
 </div>
 
