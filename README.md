@@ -1,4 +1,15 @@
-# RNb-NeuS
+# RNb-NeuS: Reflectance and Normal-based Multi-View 3D Reconstruction
+
+<div align="center">
+  <hr>
+  <h1>✨ RNb-NeuS2 is now available! ✨</h1>
+  <p>A new and improved version of this project has been released, featuring a <strong>100x faster CUDA implementation</strong>.</p>
+  <a href="https://robinbruneau.github.io/publications/rnb_neus2.html"><img src="https://img.shields.io/badge/Project_Page-🌐-blue?style=for-the-badge" alt="Project Page"></a>
+  <a href="https://arxiv.org/abs/2506.04115"><img src="https://img.shields.io/badge/arXiv-2506.04115-b31b1b?style=for-the-badge" alt="arXiv"></a>
+  <a href="https://github.com/RobinBruneau/RNb-NeuS2"><img src="https://img.shields.io/badge/Code-💻-black?style=for-the-badge" alt="Code"></a>
+  <hr>
+</div>
+
 This is the official implementation of **RNb-NeuS: Reflectance and Normal-based Multi-View 3D Reconstruction**.
 
 [Baptiste Brument*](https://bbrument.github.io/),
@@ -9,7 +20,7 @@ This is the official implementation of **RNb-NeuS: Reflectance and Normal-based 
 [Jean-Denis Durou](https://www.irit.fr/~Jean-Denis.Durou/),
 [Lilian Calvet](https://scholar.google.com/citations?user=6JewdrMAAAAJ&hl=en)
 
-### [Project page](https://robinbruneau.github.io/publications/rnb_neus.html) | [Paper](https://arxiv.org/abs/2312.01215) | [New CUDA version (100x faster)](https://github.com/RobinBruneau/RNb-NeuS2)
+### [Project page](https://robinbruneau.github.io/publications/rnb_neus.html) | [Paper](https://openaccess.thecvf.com/content/CVPR2024/papers/Brument_RNb-NeuS_Reflectance_and_Normal-based_Multi-View_3D_Reconstruction_CVPR_2024_paper.pdf)
 
 <img src="assets/pipeline.png">
 
