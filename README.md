@@ -20,7 +20,7 @@ This is the official implementation of **RNb-NeuS: Reflectance and Normal-based 
 [Jean-Denis Durou](https://www.irit.fr/~Jean-Denis.Durou/),
 [Lilian Calvet](https://scholar.google.com/citations?user=6JewdrMAAAAJ&hl=en)
 
-### [Project page](https://robinbruneau.github.io/publications/rnb_neus.html) | [Paper](https://openaccess.thecvf.com/content/CVPR2024/papers/Brument_RNb-NeuS_Reflectance_and_Normal-based_Multi-View_3D_Reconstruction_CVPR_2024_paper.pdf)
+### [Project page](https://robinbruneau.github.io/publications/rnb_neus.html) | [Paper](https://arxiv.org/abs/2312.01215)
 
 <img src="assets/pipeline.png">
 
